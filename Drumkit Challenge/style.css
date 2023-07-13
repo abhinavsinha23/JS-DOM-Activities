@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400&display=swap');
+
+* {
+    font-family: 'Outfit', sans-serif;
+}
+
+body {
+    background-color: black;
+}
+
+#drumkit {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.sound {
+    font-size: 50pt;
+    display: block;
+}
+
+.key {
+    text-align: center;
+    color: white;
+}
+
+.soundBtn {
+    border: 5px solid red;
+    background-color: aqua;
+    font-size: 35pt;
+}
+.soundBtn:hover{
+    border: 5px solid blue;
+}

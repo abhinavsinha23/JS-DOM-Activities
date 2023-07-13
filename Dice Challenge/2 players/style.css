@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400&display=swap');
+
+* {
+    font-family: "Outfit", sans-serif;
+}
+
+body {
+    background-color: black;
+}
+
+#newGame, #game,  #buttons, #playerTurn{
+    display: flex;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a, #playerTurn{
+    color: white;
+}
+
+#game {
+    flex-wrap: wrap;
+    flex-direction: row;
+    text-align: center;
+}
+
+.players {
+    width: 15%;
+}
+
+.player, .totalScore, .currentScore {
+    font-size: 20pt;
+}
+
+@media (max-width: 800px){
+    .player, .totalScore, .currentScore {
+        font-size: 15pt;
+    }
+}
+
+@media (max-width: 600px){
+    .player, .totalScore, .currentScore {
+        font-size: 11pt;
+    }
+}
+
+#player1 {
+    background-color: white;
+}
+
+#player2{
+    background-color: orange;
+}
+
+#player1, #player2{
+    border: 1px solid white;
+}
+
+.player .totalScore {
+    font-size: 20pt;
+}
+
+.currentScore {
+    background-color: red;
+}
+
+#buttons {
+    flex-direction: row;
+    position: relative;
+    top: 2%;
+}
+
+img {
+    display: none;
+}
