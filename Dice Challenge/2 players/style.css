@@ -32,7 +32,7 @@ a, #playerTurn{
 }
 
 .players {
-    width: 15%;
+    width: 20%;
 }
 
 .player, .totalScore, .currentScore {

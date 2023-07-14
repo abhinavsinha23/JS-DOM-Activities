@@ -34,63 +34,7 @@ rollBtn.addEventListener("click", () => {
             numbers[i].style.display = "none";
         }
     }
-    if (rand != 1 && currentValue1 < 20) {
-        currentValue1 = currentValue1 + rand;
-        currentScore1.textContent = `CURRENT ${currentValue1.toString()}`;
-        playerIndex = 0
-    } 
-    else if (rand == 1 && currentValue1 < 20) {
-        playerIndex = 1;
-        currentValue1 = 0;
-        currentScore1.textContent = `CURRENT ${currentValue1.toString()}`;
-        player1.style.backgroundColor = "orange";
-        player2.style.backgroundColor = "white";
-        playerTurn.textContent = "Player 2's turn";
-        rollBtn.remove();
-        rollBtn2 = document.createElement("button");
-        rollBtn2.textContent = "ROLL";
-        buttons.appendChild(rollBtn2);
-        rollBtn2.addEventListener("click", () => {
-            rand = Math.floor(Math.random() * 6 + 1);
-            for (i = 0; i < 6; i++){
-                if (rand == values[i]){
-                    numbers[i].style.display = "block";
-                } else {
-                    numbers[i].style.display = "none";
-                }
-            }
-            if (rand != 1 && currentValue2 < 20) {
-                currentValue2 = currentValue2 + rand;
-                currentScore2.textContent = `CURRENT ${currentValue2.toString()}`;
-                playerIndex = 1;
-            } 
-            else if (rand == 1 && currentValue2 < 20) {
-                playerIndex = 0;
-                currentValue2 = 0;
-                currentScore2.textContent = `CURRENT ${currentValue2.toString()}`;
-                player1.style.backgroundColor = "white";
-                player2.style.backgroundColor = "orange";
-                playerTurn.textContent = "Player 1's turn";
-                rollBtn2.remove();
-                rollBtn = document.createElement("button");
-                rollBtn.textContent = "ROLL";
-                buttons.appendChild(rollBtn);
-                
-            }
-            else if (currentValue2 >= 20) {
-                playerTurn.textContent = "Player 2 has won!";
-                rollBtn2.remove();
-                holdBtn.remove();
-                const retry = document.createElement("button");
-                retry.textContent = "Start again?";
-                buttons.appendChild(retry);
-                retry.addEventListener("click", () => {
-                    window.location.reload();
-                })
-            }
-        })
-    }
-    else if (currentValue1 >= 20) {
+    if (totalValue1 >= 20 && totalValue2 < 20) {
         playerTurn.textContent = "Player 1 has won!";
         rollBtn.remove();
         holdBtn.remove();
@@ -101,22 +45,33 @@ rollBtn.addEventListener("click", () => {
             window.location.reload();
         })
     }
-})
-
-holdBtn.addEventListener("click", () => {
-    if (playerIndex == 0) {
-        totalValue1 = currentValue1 + totalValue1;
-        totalScore1.textContent = `${totalValue1.toString()}`;
-        currentValue1 = 0;
-        currentScore1.textContent = `CURRENT ${currentValue1.toString()}`;
+    else if (rand != 1 && totalValue1 < 20) {
+        currentValue1 = currentValue1 + rand;
+        currentScore1.textContent = `CURRENT ${currentValue1}`;
+        playerIndex = 0
+        if (totalValue1 + currentValue1 >= 20 ) {
+            totalScore1.textContent = `${totalValue1 + currentValue1}`;
+            playerTurn.textContent = "Player 1 has won!";
+            rollBtn.remove();
+            holdBtn.remove();
+            const retry = document.createElement("button");
+            retry.textContent = "Start again?";
+            buttons.appendChild(retry);
+            retry.addEventListener("click", () => {
+                window.location.reload();
+            })
+        }
+    } 
+    else if (rand == 1 && totalValue1 < 20) {
         playerIndex = 1;
+        currentValue1 = 0;
+        currentScore1.textContent = `CURRENT ${currentValue1}`;
         player1.style.backgroundColor = "orange";
         player2.style.backgroundColor = "white";
         playerTurn.textContent = "Player 2's turn";
-        rollBtn.remove();
         rollBtn2 = document.createElement("button");
         rollBtn2.textContent = "ROLL";
-        buttons.appendChild(rollBtn2);
+        rollBtn.replaceWith(rollBtn2);
         rollBtn2.addEventListener("click", () => {
             rand = Math.floor(Math.random() * 6 + 1);
             for (i = 0; i < 6; i++){
@@ -126,24 +81,7 @@ holdBtn.addEventListener("click", () => {
                     numbers[i].style.display = "none";
                 }
             }
-            if (rand != 1 && currentValue2 < 20) {
-                currentValue2 = currentValue2 + rand;
-                currentScore2.textContent = `CURRENT ${currentValue2.toString()}`;
-                playerIndex = 1;
-            } 
-            else if (rand == 1 && currentValue2 < 20) {
-                playerIndex = 0;
-                currentValue2 = 0;
-                currentScore2.textContent = `CURRENT ${currentValue2.toString()}`;
-                player1.style.backgroundColor = "white";
-                player2.style.backgroundColor = "orange";
-                playerTurn.textContent = "Player 1's turn";
-                rollBtn2.remove();
-                rollBtn = document.createElement("button");
-                rollBtn.textContent = "ROLL";
-                buttons.appendChild(rollBtn);
-            }
-            else if (currentValue2 >= 20) {
+            if (totalValue2 >= 20 && totalValue1 < 20) {
                 playerTurn.textContent = "Player 2 has won!";
                 rollBtn2.remove();
                 holdBtn.remove();
@@ -154,57 +92,107 @@ holdBtn.addEventListener("click", () => {
                     window.location.reload();
                 })
             }
+            else if (rand != 1 && totalValue2 < 20) {
+                currentValue2 = currentValue2 + rand;
+                currentScore2.textContent = `CURRENT ${currentValue2}`;
+                playerIndex = 1;
+                if ((totalValue2 + currentValue2) >= 20 ) {
+                    totalScore2.textContent = `${totalValue2 + currentValue2}`;
+                    playerTurn.textContent = "Player 2 has won!";
+                    rollBtn2.remove();
+                    holdBtn.remove();
+                    const retry = document.createElement("button");
+                    retry.textContent = "Start again?";
+                    buttons.appendChild(retry);
+                    retry.addEventListener("click", () => {
+                        window.location.reload();
+                    })
+                }
+            } 
+            else if (rand == 1 && totalValue2 < 20) {
+                playerIndex = 0;
+                currentValue2 = 0;
+                currentScore2.textContent = `CURRENT ${currentValue2}`;
+                player1.style.backgroundColor = "white";
+                player2.style.backgroundColor = "orange";
+                playerTurn.textContent = "Player 1's turn";
+                rollBtn2.replaceWith(rollBtn);
+            }
+        })
+    }
+})
+
+holdBtn.addEventListener("click", () => {
+    if (playerIndex == 0) {
+        totalValue1 = currentValue1 + totalValue1;
+        totalScore1.textContent = `${totalValue1}`;
+        currentValue1 = 0;
+        currentScore1.textContent = `CURRENT ${currentValue1}`;
+        playerIndex = 1;
+        player1.style.backgroundColor = "orange";
+        player2.style.backgroundColor = "white";
+        playerTurn.textContent = "Player 2's turn";
+        rollBtn2 = document.createElement("button");
+        rollBtn2.textContent = "ROLL";
+        rollBtn.replaceWith(rollBtn2);
+        rollBtn2.addEventListener("click", () => {
+            rand = Math.floor(Math.random() * 6 + 1);
+            for (i = 0; i < 6; i++){
+                if (rand == values[i]){
+                    numbers[i].style.display = "block";
+                } else {
+                    numbers[i].style.display = "none";
+                }
+            }
+            if (totalValue2 >= 20 && totalValue1 < 20) {
+                playerTurn.textContent = "Player 2 has won!";
+                rollBtn2.remove();
+                holdBtn.remove();
+                const retry = document.createElement("button");
+                retry.textContent = "Start again?";
+                buttons.appendChild(retry);
+                retry.addEventListener("click", () => {
+                    window.location.reload();
+                })
+            }
+            else if (rand != 1 && totalValue2 < 20) {
+                currentValue2 = currentValue2 + rand;
+                currentScore2.textContent = `CURRENT ${currentValue2}`;
+                playerIndex = 1;
+                if ((totalValue2 + currentValue2) >= 20 ) {
+                    totalScore2.textContent = `${totalValue2 + currentValue2}`;
+                    playerTurn.textContent = "Player 2 has won!";
+                    rollBtn2.remove();
+                    holdBtn.remove();
+                    const retry = document.createElement("button");
+                    retry.textContent = "Start again?";
+                    buttons.appendChild(retry);
+                    retry.addEventListener("click", () => {
+                        window.location.reload();
+                    })
+                }
+            } 
+            else if (rand == 1 && totalValue2 < 20) {
+                playerIndex = 0;
+                currentValue2 = 0;
+                currentScore2.textContent = `CURRENT ${currentValue2}`;
+                player1.style.backgroundColor = "white";
+                player2.style.backgroundColor = "orange";
+                playerTurn.textContent = "Player 1's turn";
+                rollBtn2.replaceWith(rollBtn);
+            }
         })
     }
     else if (playerIndex == 1) {
         totalValue2 = currentValue2 + totalValue2;
-        totalScore2.textContent = `${totalValue2.toString()}`;
+        totalScore2.textContent = `${totalValue2}`;
         currentValue2 = 0;
-        currentScore2.textContent = `CURRENT ${currentValue2.toString()}`;
+        currentScore2.textContent = `CURRENT ${currentValue2}`;
         playerIndex = 0;
         player1.style.backgroundColor = "white";
         player2.style.backgroundColor = "orange";
         playerTurn.textContent = "Player 1's turn";
-        rollBtn2.remove();
-        rollBtn = document.createElement("button");
-        rollBtn.textContent = "ROLL";
-        buttons.appendChild(rollBtn);
-        // rollBtn.addEventListener("click", () => {
-        //     rand = Math.floor(Math.random() * 6 + 1);
-        //     for (i = 0; i < 6; i++){
-        //         if (rand == values[i]){
-        //             numbers[i].style.display = "block";
-        //         } else {
-        //             numbers[i].style.display = "none";
-        //         }
-        //     }
-        //     if (rand != 1 && currentValue1 < 20) {
-        //         currentValue1 = currentValue1 + rand;
-        //         currentScore1.textContent = `CURRENT ${currentValue1.toString()}`;
-        //         playerIndex = 0;
-        //     } 
-        //     else if (rand == 1 && currentValue1 < 20) {
-        //         playerIndex = 1;
-        //         currentValue1 = 0;
-        //         currentScore1.textContent = `CURRENT ${currentValue1.toString()}`;
-        //         player1.style.backgroundColor = "orange";
-        //         player2.style.backgroundColor = "white";
-        //         playerTurn.textContent = "Player 2's turn";
-        //         rollBtn.remove();
-        //         rollBtn2 = document.createElement("button");
-        //         rollBtn2.textContent = "ROLL";
-        //         buttons.appendChild(rollBtn2);
-        //     }
-        //     else if (currentValue1 >= 20) {
-        //         playerTurn.textContent = "Player 1 has won!";
-        //         rollBtn.remove();
-        //         holdBtn.remove();
-        //         const retry = document.createElement("button");
-        //         retry.textContent = "Start again?";
-        //         buttons.appendChild(retry);
-        //         retry.addEventListener("click", () => {
-        //             window.location.reload();
-        //         })
+        rollBtn2.replaceWith(rollBtn);
     }
 })
     
