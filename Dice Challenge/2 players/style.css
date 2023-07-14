@@ -77,6 +77,16 @@ a, #playerTurn{
     top: 2%;
 }
 
+button {
+    font-size: 30pt;
+    background-color: aqua;
+    border: 3px solid red;
+}
+
+button:hover {
+    border: 3px solid blue;
+}
+
 img {
     display: none;
 }
