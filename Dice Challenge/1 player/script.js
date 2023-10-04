@@ -16,7 +16,6 @@ let rand;
 
 rollBtn.addEventListener("click", () => {
     rand = Math.floor(Math.random() * 6 + 1);
-    console.log(rand);
     for (i = 0; i < 6; i++){
         if (rand == values[i]){
             numbers[i].style.display = "block";
